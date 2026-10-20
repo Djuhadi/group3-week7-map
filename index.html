@@ -93,6 +93,18 @@ h1{font-size:clamp(24px,3.2vw,34px);font-weight:800;line-height:1.15;color:var(-
 .agentcard li{margin:0 0 8px}
 .agentcard li:last-child{margin-bottom:0}
 code{font:500 .9em/1.4 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:1px 5px;overflow-wrap:anywhere}
+.ps5 h3{font-size:19px;font-weight:800;color:var(--head);margin:28px 0 8px}
+.ps5 p{max-width:80ch;margin:0 0 12px}
+.tablewrap{overflow-x:auto;margin:0 0 14px}
+.runlog{border-collapse:collapse;font-size:15.5px;min-width:640px}
+.runlog th,.runlog td{text-align:left;vertical-align:top;padding:8px 12px;border-bottom:1px solid var(--rule)}
+.runlog th{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:14px;margin:0 0 14px}
+.shots figure{margin:0}
+.shots img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:6px;background:#fff;cursor:zoom-in}
+.shots figcaption{font-size:14px;color:var(--ink-2);margin-top:6px}
+.predict{border-left:4px solid var(--m-ikd);background:var(--strip-bg);padding:12px 16px;border-radius:0 6px 6px 0;max-width:80ch;margin:0 0 14px}
+.predict p:last-child{margin-bottom:0}
 
 @media (max-width:760px){
   body{padding-top:20px}
@@ -171,6 +183,39 @@ code{font:500 .9em/1.4 var(--mono);background:var(--paper);border:1px solid var(
         <li><strong>It must never:</strong> Email anyone but me. The “To” field in the Send Email step is typed in as my own address, not mapped from the incoming email, so it cannot reply to a recruiter or anyone else.</li>
         <li><strong>Where a person checks:</strong> I read each “ACTION NEEDED” alert when it arrives and open the original email before replying. Each evening I compare my inbox with Zap History to catch missed invites or false alarms.</li>
       </ol>
+    </div>
+
+    <h3>Three runs, checked against Zap History</h3>
+    <p>At 9:07 AM on 20 October I sent myself three interview invitations. Zap History shows three successful runs between 09:07:43 and 09:07:46, about 25 seconds after the emails arrived, and each alert matched its email. Click any screenshot to see it full size.</p>
+    <div class="tablewrap">
+      <table class="runlog">
+        <thead><tr><th>Run</th><th>Test email subject</th><th>Alert in my inbox</th><th>Right call?</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Interview invitation – Graduate Analyst role</td><td>“ACTION NEEDED: Interview invitation – Graduate Analyst role”, with the correct sender, time and preview</td><td>Yes, a real invite</td></tr>
+          <tr><td>2</td><td>Second-round interview: please confirm your slot</td><td>“ACTION NEEDED: Second-round interview: please confirm your slot”, with the correct sender, time and preview</td><td>Yes, a real invite</td></tr>
+          <tr><td>3</td><td>Interview schedule – Associate Product Manager</td><td>“ACTION NEEDED: Interview schedule – Associate Product Manager”, with the correct sender, time and preview</td><td>Yes, a real invite</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="shots">
+      <figure><img src="screenshots/08-zap-history-3-runs.png" alt="Zap History listing three successful runs of Interview Invite Catcher on 20 October 2026 at 09:07"><figcaption>Zap History: three successful runs.</figcaption></figure>
+      <figure><img src="screenshots/05-run1-alert.png" alt="Alert email for run 1: ACTION NEEDED: Interview invitation – Graduate Analyst role"><figcaption>Run 1 alert.</figcaption></figure>
+      <figure><img src="screenshots/06-run2-alert.png" alt="Alert email for run 2: ACTION NEEDED: Second-round interview: please confirm your slot"><figcaption>Run 2 alert.</figcaption></figure>
+      <figure><img src="screenshots/07-run3-alert.png" alt="Alert email for run 3: ACTION NEEDED: Interview schedule – Associate Product Manager"><figcaption>Run 3 alert.</figcaption></figure>
+    </div>
+    <p>I also opened one run in Zap History. Data in shows the trigger used my exact search, and Data out shows the email it found (“Please pick a time on Thursday or Friday.”, run 2). Both steps were marked successful: the trigger found one new email, and Send Email sent one message to me.</p>
+    <div class="shots">
+      <figure><img src="screenshots/09-run-detail-data-in.webp" alt="Zap History run detail: trigger Data in shows the query subject:interview -subject:&quot;ACTION NEEDED&quot;"><figcaption>One run opened: Data in is my search string.</figcaption></figure>
+      <figure><img src="screenshots/10-run-detail-data-out.webp" alt="Zap History run detail: trigger Data out shows the email found, with snippet Please pick a time on Thursday or Friday"><figcaption>Same run: Data out is the email it caught.</figcaption></figure>
+    </div>
+
+    <h3>Tricky case</h3>
+    <div class="predict">
+      <p><strong>My prediction, written at 9:15 AM before running it.</strong> I will send myself an email titled “5 interview tips for fresh graduates – Career Newsletter”. It is not an invitation, but its subject contains “interview”, and my trigger checks only for that word. I expect the Zap to send me a wrong “ACTION NEEDED” alert.</p>
+      <p>The Zap has already made this mistake once. While I was setting it up, it picked a LinkedIn notification about a CEO’s Business Times interview as a “possible interview invite”.</p>
+    </div>
+    <div class="shots">
+      <figure><img src="screenshots/04-test-alert-false-alarm.png" alt="Test alert wrongly flagging a LinkedIn post about a Business Times interview as a possible interview invite"><figcaption>The first false alarm, during setup: a LinkedIn post, not an invite.</figcaption></figure>
     </div>
   </section>
 </main>
@@ -295,6 +340,13 @@ $("#clear").addEventListener("click", () => {
 });
 
 idle();
+
+// Each screenshot opens full size in a new tab.
+document.querySelectorAll(".shots img").forEach(img => {
+  const a = el("a", { href: img.getAttribute("src"), target: "_blank", rel: "noopener" });
+  img.replaceWith(a);
+  a.append(img);
+});
 </script>
 </body>
 </html>
