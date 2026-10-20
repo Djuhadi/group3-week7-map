@@ -105,6 +105,15 @@ code{font:500 .9em/1.4 var(--mono);background:var(--paper);border:1px solid var(
 .shots figcaption{font-size:14px;color:var(--ink-2);margin-top:6px}
 .predict{border-left:4px solid var(--m-ikd);background:var(--strip-bg);padding:12px 16px;border-radius:0 6px 6px 0;max-width:80ch;margin:0 0 14px}
 .predict p:last-child{margin-bottom:0}
+.mini{margin:0 0 16px}
+.mini .quad{min-height:118px}
+.quad .qname{font-size:17.5px;font-weight:600;color:var(--q-ink);margin:0 2px}
+.quad.here{box-shadow:0 0 0 3px var(--m-ikd)}
+.pin{display:flex;align-items:center;gap:9px;margin:4px 2px 0;font-weight:700;color:var(--ink)}
+.pin .who{font:700 12px/1 var(--mono);color:var(--m-ikd);white-space:nowrap}
+.q1 h4{font-size:17px;font-weight:800;color:var(--head);margin:18px 0 6px}
+.reflect{border-left:4px solid var(--m-ikd);background:var(--strip-bg);padding:12px 16px;border-radius:0 6px 6px 0;max-width:80ch}
+.reflect p{margin:0}
 
 @media (max-width:760px){
   body{padding-top:20px}
@@ -186,7 +195,7 @@ code{font:500 .9em/1.4 var(--mono);background:var(--paper);border:1px solid var(
     </div>
 
     <h3>Three runs, checked against Zap History</h3>
-    <p>At 9:07 AM on 20 October I sent myself three interview invitations. Zap History shows three successful runs between 09:07:43 and 09:07:46, about 25 seconds after the emails arrived, and each alert matched its email. Click any screenshot to see it full size.</p>
+    <p>At 9:07 AM on 20 October I sent myself three interview invitations. Zap History shows three successful runs between 09:07:43 and 09:07:46, about 25 seconds after the emails arrived, and each alert matched its email. Zap History also has an earlier run at 09:05:51. It caught a first copy of the “Graduate Analyst” invitation that I sent at 9:05, before the batch of three, and that call was also right. Click any screenshot to see it full size.</p>
     <div class="tablewrap">
       <table class="runlog">
         <thead><tr><th>Run</th><th>Test email subject</th><th>Alert in my inbox</th><th>Right call?</th></tr></thead>
@@ -252,11 +261,75 @@ code{font:500 .9em/1.4 var(--mono);background:var(--paper);border:1px solid var(
     </div>
     <div class="shots">
       <figure><img src="screenshots/16-rerun-b-alert.png" alt="Alert for email B: ACTION NEEDED: Interview invitation – Data Analyst role"><figcaption>B, a real invite, still gets its alert.</figcaption></figure>
-      <figure><img src="screenshots/17-rerun-zap-history.png" alt="Zap History showing one new run at 09:29:39, marked Successful"><figcaption>Zap History: one new run, for B only.</figcaption></figure>
+      <figure><img src="screenshots/17-rerun-zap-history.png" alt="Zap History showing one new run at 09:29:39, marked Successful"><figcaption>Zap History: B’s run at 09:29:39.</figcaption></figure>
       <figure><img src="screenshots/18-rerun-data-in-v2.webp" alt="Run detail on version v2: Data in shows the new search query"><figcaption>The run used version 2’s new search.</figcaption></figure>
       <figure><img src="screenshots/19-rerun-data-out-v2.webp" alt="Run detail on version v2: Data out shows email B, We'd like to invite you to interview on Monday"><figcaption>Data out: the email it caught was B.</figcaption></figure>
     </div>
+    <p><strong>One surprise.</strong> At 09:27:52, a minute before I sent A and B, Zapier ran once more and sent me a duplicate alert for one of my earlier test invites. Publishing the new search seems to have made Zapier treat an older matching email as new. A did not cause it, but it shows that editing a live Zap can resend old alerts, so Zap History has more runs than I sent test emails.</p>
     <p>The stricter search has a cost. An invitation titled only “Interview with DBS on Monday” has none of the five words, so version 2 would miss it. I traded fewer false alarms for a small risk of missing a real invite, which is why I still check my inbox against Zap History each evening.</p>
+
+    <h3>Where my agent sits on our map</h3>
+    <div class="map mini" aria-label="Our two-by-two map with my agent placed in AI alone, with checks">
+      <div class="corner"></div>
+      <div class="colhead">Work with a right answer</div>
+      <div class="colhead">Work with no single right answer</div>
+
+      <div class="rowhead">Work that people and AI must do together</div>
+      <div class="quad pink">
+        <div class="tags"><span>Must do together</span><span>Right answer</span></div>
+        <p class="qname">A person leads, AI inside</p>
+      </div>
+      <div class="quad blue">
+        <div class="tags"><span>Must do together</span><span>No single right answer</span></div>
+        <p class="qname">Agents run it, a person judges</p>
+      </div>
+
+      <div class="rowhead">Work that either of them can do alone</div>
+      <div class="quad blue here">
+        <div class="tags"><span>Either can do alone</span><span>Right answer</span></div>
+        <p class="qname">AI alone, with checks</p>
+        <p class="pin"><span class="dot" style="--c:var(--m-ikd)"></span>Interview Invite Catcher <span class="who">IKD · PS5</span></p>
+      </div>
+      <div class="quad pink">
+        <div class="tags"><span>Either can do alone</span><span>No single right answer</span></div>
+        <p class="qname">A person decides, AI alongside</p>
+      </div>
+    </div>
+
+    <div class="q1">
+      <h3>Q1 · Where does my agent sit, and what does that mean for the person in the loop?</h3>
+
+      <h4>(a) My quadrant</h4>
+      <p><strong>AI alone, with checks</strong> (bottom left).</p>
+
+      <h4>(b) The map’s two questions</h4>
+      <p><strong>Work with a right answer.</strong> An email either is an interview invitation or it is not, so every run can be marked right or wrong. My runs show this: runs 1–3 and email B were clearly right, and the newsletter and the LinkedIn post were clearly wrong. Judging them needed no taste and no weighing of options.</p>
+      <p><strong>Work that either of them can do alone.</strong> I could sort my inbox myself, and the Zap did it with no one inside the run. Every alert arrived within about two minutes without me doing anything. The job needs a person to check the results, not to take part in each run.</p>
+
+      <h4>(c) The person in the loop</h4>
+      <p>I am the person at the gate, but the gate comes after the agent acts. The agent may read my inbox and send me an alert on its own. It may never email anyone else, reply to a recruiter or decide anything about a job. I check each alert by opening the original email before I reply, and each evening I compare my inbox with Zap History for misses and false alarms. The tricky case shows why this matters: Zap History marked the false alarm “Successful”, so only a person can tell a right run from a wrong one.</p>
+      <p>It would move to another quadrant if it did more. If it replied to recruiters to book interview slots, a wrong reply could cost me an interview, so I would approve every reply before it went out: <strong>A person leads, AI inside</strong>. If it judged which roles were worth applying for, there would be no single right answer and I would make the decision: <strong>A person decides, AI alongside</strong>.</p>
+
+      <h4>(d) My group’s view</h4>
+      <p>I agree with most of where Group 3 placed its tasks, including my own two: shortlisting 500 graduate applicants (Agents run it, a person judges) and drafting clinical notes (A person leads, AI inside). I would answer one question differently for CCH’s “Sort post comments”, which we placed in AI alone, with checks. Sorting comments as positive or negative has a right answer, but spotting a “problematic” comment, such as a complaint that could become a crisis or a legal threat, should not be left to AI alone. A social media manager has to read those. For that part I would answer “must do it together”, which moves it to A person leads, AI inside. My own agent taught me this: a simple rule looked right until one tricky case broke it.</p>
+    </div>
+
+    <h3>Collaboration log</h3>
+    <div class="tablewrap">
+      <table class="runlog">
+        <tbody>
+          <tr><th scope="row">What I delegated to AI</th><td>I used Claude, an AI assistant, to explain the problem set, draft my agent card and Gmail searches, crop my email address out of screenshots, and build this page section. Zapier runs the agent itself: it reads my inbox and sends the alerts.</td></tr>
+          <tr><th scope="row">What I checked, and how</th><td>I checked every alert against its run in Zap History, compared Data in (the search) with Data out (the email caught), and confirmed each alert went only to me. I read and edited everything Claude drafted before publishing it.</td></tr>
+          <tr><th scope="row">One AI error I caught</th><td>The first search, which Claude wrote, was too broad. It flagged a LinkedIn post about a CEO’s interview and a careers newsletter as “possible interview invites”. I caught it by testing, and we fixed it in version 2. Publishing version 2 then sent a duplicate alert, which I spotted in Zap History.</td></tr>
+          <tr><th scope="row">Time and cost</th><td>About 1 hour 30 minutes on 20 October 2026. No money spent: Zapier’s free plan (a handful of runs, well within its monthly limit), plus free Gmail, GitHub and Vercel.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Reflection</h3>
+    <div class="reflect">
+      <p>My agent fitted the job because spotting an interview invitation has a right answer and needs no judgement, so it could run alone and alert me within about two minutes. It failed when an email used the word “interview” without being an invitation: a LinkedIn post and a newsletter both set off alerts that Zap History still marked “Successful”. I would change it to check the sender against companies I have applied to, and keep my evening check, because the stricter search could now miss an invitation titled only “Interview with DBS”.</p>
+    </div>
   </section>
 </main>
 

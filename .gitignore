@@ -1,0 +1,2 @@
+# Zap history exports go to eLearn only; never commit them to this public repo.
+*.json
