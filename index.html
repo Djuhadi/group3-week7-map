@@ -84,6 +84,16 @@ h1{font-size:clamp(24px,3.2vw,34px);font-weight:800;line-height:1.15;color:var(-
 .ctl.ghost{background:transparent;color:var(--head)}
 .hint{margin:14px 0 0;padding:8px 14px;border-left:3px solid var(--eyebrow);background:var(--strip-bg);font-style:italic;font-size:14.5px;color:var(--ink-2)}
 
+.ps5{margin-top:28px;border-left-color:var(--m-ikd)}
+.ps5 h2{font-size:clamp(21px,2.6vw,26px);font-weight:800;line-height:1.2;color:var(--head);margin:10px 0 14px}
+.agentcard{border:1px solid var(--rule);border-radius:6px;background:var(--strip-bg);padding:14px 18px;max-width:80ch}
+.agentcard .ac-head{margin:0 0 10px;font-weight:600;color:var(--head)}
+.agentcard .ac-head span{color:var(--ink-2);font-weight:400}
+.agentcard ol{margin:0;padding-left:1.4em}
+.agentcard li{margin:0 0 8px}
+.agentcard li:last-child{margin-bottom:0}
+code{font:500 .9em/1.4 var(--mono);background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:1px 5px;overflow-wrap:anywhere}
+
 @media (max-width:760px){
   body{padding-top:20px}
   .map{grid-template-columns:1fr}
@@ -147,6 +157,21 @@ h1{font-size:clamp(24px,3.2vw,34px);font-weight:800;line-height:1.15;color:var(-
       <button type="button" class="ctl ghost" id="clear">Clear</button>
     </div>
     <p class="hint">Click a task card to place it, or Show all. Tasks are each member’s own; the placements are for discussion.</p>
+  </section>
+
+  <section class="card ps5" aria-labelledby="ps5-title">
+    <p class="eyebrow">Problem Set 5 · IKD</p>
+    <h2 id="ps5-title">My own agent: Interview Invite Catcher</h2>
+    <div class="agentcard">
+      <p class="ac-head">My agent card <span>|</span> Interview Invite Catcher <span>|</span> finished 20 October 2026, 8:45 AM SGT</p>
+      <ol>
+        <li><strong>The job:</strong> Watches my Gmail inbox for interview invitations and alerts me straight away, so that I, a graduate student applying for jobs, never miss one or reply late.</li>
+        <li><strong>The trigger:</strong> A new email arrives in my Gmail with “interview” in the subject (Gmail search <code>subject:interview -subject:"ACTION NEEDED"</code>).</li>
+        <li><strong>The tools:</strong> Gmail, New Email Matching Search (reads my inbox) and Gmail, Send Email (sends me one alert). Nothing else.</li>
+        <li><strong>It must never:</strong> Email anyone but me. The “To” field in the Send Email step is typed in as my own address, not mapped from the incoming email, so it cannot reply to a recruiter or anyone else.</li>
+        <li><strong>Where a person checks:</strong> I read each “ACTION NEEDED” alert when it arrives and open the original email before replying. Each evening I compare my inbox with Zap History to catch missed invites or false alarms.</li>
+      </ol>
+    </div>
   </section>
 </main>
 
