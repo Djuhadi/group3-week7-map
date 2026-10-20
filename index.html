@@ -178,7 +178,7 @@ code{font:500 .9em/1.4 var(--mono);background:var(--paper);border:1px solid var(
       <p class="ac-head">My agent card <span>|</span> Interview Invite Catcher <span>|</span> finished 20 October 2026, 8:45 AM SGT</p>
       <ol>
         <li><strong>The job:</strong> Watches my Gmail inbox for interview invitations and alerts me straight away, so that I, a graduate student applying for jobs, never miss one or reply late.</li>
-        <li><strong>The trigger:</strong> A new email arrives in my Gmail with “interview” in the subject (Gmail search <code>subject:interview -subject:"ACTION NEEDED"</code>).</li>
+        <li><strong>The trigger:</strong> A new email arrives in my Gmail with “interview” in the subject (Gmail search <code>subject:interview -subject:"ACTION NEEDED"</code>). <em>Made stricter after the tricky case; see “The fix” below.</em></li>
         <li><strong>The tools:</strong> Gmail, New Email Matching Search (reads my inbox) and Gmail, Send Email (sends me one alert). Nothing else.</li>
         <li><strong>It must never:</strong> Email anyone but me. The “To” field in the Send Email step is typed in as my own address, not mapped from the incoming email, so it cannot reply to a recruiter or anyone else.</li>
         <li><strong>Where a person checks:</strong> I read each “ACTION NEEDED” alert when it arrives and open the original email before replying. Each evening I compare my inbox with Zap History to catch missed invites or false alarms.</li>
@@ -217,6 +217,46 @@ code{font:500 .9em/1.4 var(--mono);background:var(--paper);border:1px solid var(
     <div class="shots">
       <figure><img src="screenshots/04-test-alert-false-alarm.png" alt="Test alert wrongly flagging a LinkedIn post about a Business Times interview as a possible interview invite"><figcaption>The first false alarm, during setup: a LinkedIn post, not an invite.</figcaption></figure>
     </div>
+    <p><strong>What happened.</strong> I sent the newsletter at 9:17 AM. At 09:17:49 the Zap sent me “ACTION NEEDED: 5 interview tips for fresh graduates – Career Newsletter”, as I predicted. Zap History marks the run <em>Successful</em>. The Zap worked as built but made the wrong call: “Successful” means every step ran, not that the output was right. That is why a person still has to read the alerts.</p>
+    <div class="shots">
+      <figure><img src="screenshots/11-tricky-email-newsletter.png" alt="The tricky email: 5 interview tips for fresh graduates – Career Newsletter"><figcaption>The tricky email: a newsletter, not an invite.</figcaption></figure>
+      <figure><img src="screenshots/12-tricky-false-alarm.png" alt="Wrong alert: ACTION NEEDED: 5 interview tips for fresh graduates – Career Newsletter"><figcaption>The wrong alert it caused.</figcaption></figure>
+      <figure><img src="screenshots/13-zap-history-tricky-run.png" alt="Zap History showing the run at 09:17:49 marked Successful"><figcaption>Zap History still says “Successful”.</figcaption></figure>
+    </div>
+
+    <h3>The fix</h3>
+    <p>The problem was in step 1, not the alert. A search for “interview” alone cannot tell an invitation from a newsletter. I changed the search so the subject must also contain a word real invitations use, and published it as version 2, named “v2 – fix: require invite words”. Step 2 is unchanged.</p>
+    <div class="tablewrap">
+      <table class="runlog">
+        <tbody>
+          <tr><th scope="row">Before (v1)</th><td><code>subject:interview -subject:"ACTION NEEDED"</code></td></tr>
+          <tr><th scope="row">After (v2)</th><td><code>subject:interview (subject:invitation OR subject:invite OR subject:schedule OR subject:round OR subject:slot) -subject:"ACTION NEEDED"</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="shots">
+      <figure><img src="screenshots/14-fix-new-search.png" alt="The new search keywords in step 1 of the Zap"><figcaption>The new search in step 1.</figcaption></figure>
+      <figure><img src="screenshots/15-fix-v2-published.webp" alt="Zapier showing version v2 – fix: require invite words published and turned on"><figcaption>Version 2 published and on.</figcaption></figure>
+    </div>
+
+    <h3>The tricky case, run again after the fix</h3>
+    <p>At 9:28 AM I sent two emails. A was the same newsletter again, with “(week 2)” added so Gmail would not group it with the first one. B was a real invitation, to check that the fix had not broken the Zap.</p>
+    <div class="tablewrap">
+      <table class="runlog">
+        <thead><tr><th>Email</th><th>Subject</th><th>Expected</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>5 interview tips for fresh graduates – Career Newsletter (week 2)</td><td>No alert</td><td>No alert and no run in Zap History. Fixed.</td></tr>
+          <tr><td>B</td><td>Interview invitation – Data Analyst role</td><td>Alert</td><td>Alert at 9:29 AM; Zap History run at 09:29:39 on version 2, Successful.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="shots">
+      <figure><img src="screenshots/16-rerun-b-alert.png" alt="Alert for email B: ACTION NEEDED: Interview invitation – Data Analyst role"><figcaption>B, a real invite, still gets its alert.</figcaption></figure>
+      <figure><img src="screenshots/17-rerun-zap-history.png" alt="Zap History showing one new run at 09:29:39, marked Successful"><figcaption>Zap History: one new run, for B only.</figcaption></figure>
+      <figure><img src="screenshots/18-rerun-data-in-v2.webp" alt="Run detail on version v2: Data in shows the new search query"><figcaption>The run used version 2’s new search.</figcaption></figure>
+      <figure><img src="screenshots/19-rerun-data-out-v2.webp" alt="Run detail on version v2: Data out shows email B, We'd like to invite you to interview on Monday"><figcaption>Data out: the email it caught was B.</figcaption></figure>
+    </div>
+    <p>The stricter search has a cost. An invitation titled only “Interview with DBS on Monday” has none of the five words, so version 2 would miss it. I traded fewer false alarms for a small risk of missing a real invite, which is why I still check my inbox against Zap History each evening.</p>
   </section>
 </main>
 
